@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F292F521F9F0FB400AAFC8C /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F292F511F9F0FB400AAFC8C /* Models.swift */; };
+		9F292F541F9F105A00AAFC8C /* BreweryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F292F531F9F105A00AAFC8C /* BreweryViewController.swift */; };
 		9F2D670B1F9DC8680049A097 /* StyleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2D670A1F9DC8680049A097 /* StyleDetailViewController.swift */; };
+		9F2D670D1F9E1DB00049A097 /* BreweriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2D670C1F9E1DB00049A097 /* BreweriesViewController.swift */; };
 		9FC596A41F9CE7130001BAA5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC596A31F9CE7130001BAA5 /* AppDelegate.swift */; };
 		9FC596A61F9CE7130001BAA5 /* StylesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC596A51F9CE7130001BAA5 /* StylesViewController.swift */; };
 		9FC596A91F9CE7130001BAA5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FC596A71F9CE7130001BAA5 /* Main.storyboard */; };
@@ -21,7 +24,10 @@
 /* Begin PBXFileReference section */
 		166575D04F8637BF00861A02 /* Pods-TheBeerApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBeerApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBeerApp/Pods-TheBeerApp.release.xcconfig"; sourceTree = "<group>"; };
 		270142FFB75EAAC8FFE197A9 /* Pods_TheBeerApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheBeerApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F292F511F9F0FB400AAFC8C /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		9F292F531F9F105A00AAFC8C /* BreweryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreweryViewController.swift; sourceTree = "<group>"; };
 		9F2D670A1F9DC8680049A097 /* StyleDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleDetailViewController.swift; sourceTree = "<group>"; };
+		9F2D670C1F9E1DB00049A097 /* BreweriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreweriesViewController.swift; sourceTree = "<group>"; };
 		9FC596A01F9CE7130001BAA5 /* TheBeerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheBeerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FC596A31F9CE7130001BAA5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9FC596A51F9CE7130001BAA5 /* StylesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StylesViewController.swift; sourceTree = "<group>"; };
@@ -88,7 +94,10 @@
 				9FC596A51F9CE7130001BAA5 /* StylesViewController.swift */,
 				9F2D670A1F9DC8680049A097 /* StyleDetailViewController.swift */,
 				9FC596A71F9CE7130001BAA5 /* Main.storyboard */,
+				9F2D670C1F9E1DB00049A097 /* BreweriesViewController.swift */,
+				9F292F531F9F105A00AAFC8C /* BreweryViewController.swift */,
 				9FC596B51F9D08E00001BAA5 /* StyleCell.swift */,
+				9F292F511F9F0FB400AAFC8C /* Models.swift */,
 				9FC596B71F9D0D020001BAA5 /* Utilities.swift */,
 				9FC596AA1F9CE7130001BAA5 /* Assets.xcassets */,
 				9FC596AC1F9CE7130001BAA5 /* LaunchScreen.storyboard */,
@@ -231,6 +240,9 @@
 				9FC596A41F9CE7130001BAA5 /* AppDelegate.swift in Sources */,
 				9FC596B81F9D0D020001BAA5 /* Utilities.swift in Sources */,
 				9FC596B61F9D08E00001BAA5 /* StyleCell.swift in Sources */,
+				9F292F541F9F105A00AAFC8C /* BreweryViewController.swift in Sources */,
+				9F2D670D1F9E1DB00049A097 /* BreweriesViewController.swift in Sources */,
+				9F292F521F9F0FB400AAFC8C /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

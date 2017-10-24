@@ -26,10 +26,6 @@ class StyleDetailViewController: UIViewController {
         nameLabel.text = name
         descriptionView.text = styleDescription
     }
-
-    @IBAction func exitBttn(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
-    }
     
     func createBackground() {
         
@@ -37,6 +33,16 @@ class StyleDetailViewController: UIViewController {
             if srmMinInt < 41 && srmMaxInt < 41 {
                 let srmMinColor = UIColor(hex: beerColors[srmMinInt - 1] ).cgColor
                 let srmMaxColor = UIColor(hex: beerColors[srmMaxInt - 1] ).cgColor
+                
+                let gradientLayer = CAGradientLayer()
+                gradientLayer.colors = [ srmMinColor, srmMaxColor ]
+                gradientLayer.locations = [ 0.0, 1.0]
+                gradientLayer.frame = self.view.bounds
+                
+                self.view.layer.insertSublayer(gradientLayer, at: 0)
+            } else if srmMinInt < 41 && srmMaxInt > 40 {
+                let srmMinColor = UIColor(hex: beerColors[srmMinInt - 1] ).cgColor
+                let srmMaxColor = UIColor.black.cgColor
                 
                 let gradientLayer = CAGradientLayer()
                 gradientLayer.colors = [ srmMinColor, srmMaxColor ]

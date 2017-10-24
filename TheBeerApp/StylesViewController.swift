@@ -8,47 +8,82 @@
 
 import UIKit
 
-struct Response: Decodable {
-    var message: String
-    var data: [Style]
-    var status: String
-}
+class StylesViewController: UICollectionViewController, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
 
-struct Style: Decodable {
-    var id: Int
-    var categoryId: Int
-    var category: Category
-    var name: String
-    var shortName: String
-    var description: String?
-    var ibuMin: String?
-    var ibuMax: String?
-    var abvMin: String?
-    var abvMax: String?
-    var srmMin: String?
-    var srmMax: String?
-    var ogMin: String?
-    var fgMin: String?
-    var fgMax: String?
-}
-
-struct Category: Decodable {
-    var id: Int
-    var name: String
-    var createDate: String
-}
-
-class StylesViewController: UICollectionViewController {
     
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     fileprivate let itemsPerRow: CGFloat = 1
     
     var styleArray: [Style] = []
+    var filteredArray: [Style] = []
+    
+    var searchActive: Bool = false
+    
+    let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        createSearchBar()
         requestData()
+    }
+    
+    func createSearchBar() {
+
+        self.searchController.searchResultsUpdater = self
+        self.searchController.delegate = self
+        self.searchController.searchBar.delegate = self
+        
+        self.searchController.hidesNavigationBarDuringPresentation = false
+        self.searchController.obscuresBackgroundDuringPresentation = false
+        self.searchController.dimsBackgroundDuringPresentation = false
+        self.searchController.searchBar.placeholder = "Search for styles here"
+        
+        self.searchController.searchBar.becomeFirstResponder()
+        
+        navigationController?.navigationItem.titleView = self.searchController.searchBar
+        
+        self.navigationItem.titleView = self.searchController.searchBar
+        
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchActive = false
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchString = searchController.searchBar.text
+        
+        if searchString != "" {
+            filteredArray = styleArray.filter({ (style: Style) -> Bool in
+                let name: NSString = style.name as NSString
+                
+                return (name.range(of: searchString!, options: NSString.CompareOptions.caseInsensitive).location) != NSNotFound
+            })
+        } else {
+            filteredArray = styleArray
+        }
+        
+        collectionView?.reloadData()
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchActive = true
+        collectionView?.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchActive = false
+        collectionView?.reloadData()
+    }
+    
+    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        if !searchActive {
+            searchActive = true
+            collectionView?.reloadData()
+        }
+        
+        searchController.searchBar.resignFirstResponder()
     }
     
     func requestData() {
@@ -87,8 +122,6 @@ class StylesViewController: UICollectionViewController {
                         return boolo
                     })
                     
-                    
-                    
                     DispatchQueue.main.async {
 
                         self.collectionView?.reloadData()
@@ -105,32 +138,61 @@ class StylesViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return styleArray.count
+        if searchActive {
+            return filteredArray.count
+        } else {
+            return styleArray.count
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StyleCell", for: indexPath) as! StyleCell
-        
-        cell.nameLabel.text = styleArray[indexPath.row].name
-        
-        let srmMin = styleArray[indexPath.row].srmMin
-        
-        if srmMin != nil {
-            if let srmMinInt = Int(srmMin!) {
-                if srmMinInt <= 40 {
-                    
-                    let color = UIColor(hex: beerColors[srmMinInt - 1])
-                    cell.backgroundColor = color
-                    
-                } else {
-                    print("srm is" + srmMin!)
+        if searchActive {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StyleCell", for: indexPath) as! StyleCell
+            
+            cell.nameLabel.text = filteredArray[indexPath.row].name
+            
+            let srmMin = filteredArray[indexPath.row].srmMin
+            
+            if srmMin != nil {
+                if let srmMinInt = Int(srmMin!) {
+                    if srmMinInt <= 40 {
+                        
+                        let color = UIColor(hex: beerColors[srmMinInt - 1])
+                        cell.backgroundColor = color
+                        
+                    } else {
+                        print("srm is" + srmMin!)
+                    }
                 }
+            } else {
+                print("found a nil srm " + filteredArray[indexPath.row].name )
             }
+            
+            return cell
         } else {
-            print("found a nil srm " + styleArray[indexPath.row].name )
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StyleCell", for: indexPath) as! StyleCell
+            
+            cell.nameLabel.text = styleArray[indexPath.row].name
+            
+            let srmMin = styleArray[indexPath.row].srmMin
+            
+            if srmMin != nil {
+                if let srmMinInt = Int(srmMin!) {
+                    if srmMinInt <= 40 {
+                        
+                        let color = UIColor(hex: beerColors[srmMinInt - 1])
+                        cell.backgroundColor = color
+                        
+                    } else {
+                        print("srm is" + srmMin!)
+                    }
+                }
+            } else {
+                print("found a nil srm " + styleArray[indexPath.row].name )
+            }
+            
+            return cell
         }
-        
-        return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -141,16 +203,34 @@ class StylesViewController: UICollectionViewController {
         if segue.identifier == "goToStyle" {
             let dest = segue.destination as! StyleDetailViewController
             
-            if let selectedRow = collectionView?.indexPathsForSelectedItems![0].row {
-                dest.name = styleArray[selectedRow].name
-                dest.styleDescription = styleArray[selectedRow].description!
+            if searchActive {
                 
-                if let srmMax = styleArray[selectedRow].srmMax, let srmMin = styleArray[selectedRow].srmMin {
-                    dest.srmMin = srmMin
-                    dest.srmMax = srmMax
+                if let selectedRow = collectionView?.indexPathsForSelectedItems![0].row {
+                    dest.name = filteredArray[selectedRow].name
+                    dest.styleDescription = filteredArray[selectedRow].description!
+                    
+                    if let srmMax = filteredArray[selectedRow].srmMax, let srmMin = filteredArray[selectedRow].srmMin {
+                        dest.srmMin = srmMin
+                        dest.srmMax = srmMax
+                    }
+                    
                 }
                 
+            } else {
+            
+                if let selectedRow = collectionView?.indexPathsForSelectedItems![0].row {
+                    dest.name = styleArray[selectedRow].name
+                    dest.styleDescription = styleArray[selectedRow].description!
+                    
+                    if let srmMax = styleArray[selectedRow].srmMax, let srmMin = styleArray[selectedRow].srmMin {
+                        dest.srmMin = srmMin
+                        dest.srmMax = srmMax
+                    }
+                    
+                }
+            
             }
+            
         }
     }
 
@@ -176,4 +256,5 @@ extension StylesViewController: UICollectionViewDelegateFlowLayout {
     }
     
 }
+
 
