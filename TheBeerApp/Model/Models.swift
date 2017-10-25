@@ -112,3 +112,32 @@ class BreweryPoint: NSObject, MKAnnotation {
     }
 }
 
+struct BeerResponse: Decodable {
+    var currentPage: Int
+    var data: [BeerData]
+    var numberOfPages: Int
+    var status: String
+    var totalResults: Int
+}
+
+struct BeerData: Decodable {
+    var abv: String?
+    var description: String?
+    var labels: BeerLabel?
+    var availableId: Int?
+    var ibu: String?
+    var id: String
+    var isOrganic: String
+    var name: String
+    var nameDisplay: String
+    var statusDisplay: String
+    var styleId: Int
+    var style: Style?
+}
+
+struct BeerLabel: Decodable {
+    var icon: String
+    var large: String
+    var medium: String
+}
+

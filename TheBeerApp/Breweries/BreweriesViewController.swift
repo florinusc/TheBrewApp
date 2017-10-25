@@ -11,21 +11,60 @@ import MapKit
 
 
 
+protocol HandleMapSearch {
+    func dropPinZoomIn(placemark: MKPlacemark)
+}
+
+
 class BreweriesViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+    
+    @IBOutlet weak var currentLocationBttn: UIButton!
+    
+    var resultSearchController:UISearchController? = nil
+    var selectedPin: MKPlacemark? = nil
     
     @IBOutlet weak var mapView: MKMapView!
     var breweryArr: [BreweryData] = []
     var locationManager = CLLocationManager()
     
-    let homeLocation = CLLocation(latitude: 37.6213, longitude: -122.3790)
     let regionRadius: CLLocationDistance = 3000
     func centerMapOnLocation(location: CLLocation) {
+        mapView.removeAnnotations(mapView.annotations)
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius * 2.0, regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
     }
     
+    
+    @IBAction func getCurrentLocation(_ sender: UIButton) {
+        //center the map on the user's location
+        if let userLocation = mapView.userLocation.location {
+            centerMapOnLocation(location: userLocation)
+            getCurrentCity(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        currentLocationBttn.layer.cornerRadius = 8.0
+        currentLocationBttn.clipsToBounds = true
+        
+        //search controller
+        let locationSearchTable = storyboard!.instantiateViewController(withIdentifier: "LocationSearchTable") as! LocationSearchTable
+        resultSearchController = UISearchController(searchResultsController: locationSearchTable)
+        resultSearchController?.searchResultsUpdater = locationSearchTable as UISearchResultsUpdating
+        
+        let searchBar = resultSearchController?.searchBar
+        searchBar?.sizeToFit()
+        searchBar?.placeholder = "Search for breweries in other places"
+        navigationItem.titleView = searchBar
+        resultSearchController?.hidesNavigationBarDuringPresentation = false
+        resultSearchController?.dimsBackgroundDuringPresentation = true
+        definesPresentationContext = true
+        
+        locationSearchTable.mapView = mapView
+        locationSearchTable.handleMapSearchDelegate = self
         
         //setup delegates
         mapView.delegate = self
@@ -33,22 +72,24 @@ class BreweriesViewController: UIViewController, CLLocationManagerDelegate, MKMa
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.delegate = self
         
-        
         //ask for the user's permission to access location while they are using the app
         locationManager.requestWhenInUseAuthorization()
         
         //center the map on the user's location
         if let userLocation = mapView.userLocation.location {
             centerMapOnLocation(location: userLocation)
+            getCurrentCity(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
         }
     }
     
     
     /** Updates the user's location */
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        if let userLocation = mapView.userLocation.location {
-            centerMapOnLocation(location: userLocation)
-            getCurrentCity(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+        if selectedPin == nil {
+            if let userLocation = mapView.userLocation.location {
+                centerMapOnLocation(location: userLocation)
+                getCurrentCity(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+            }
         }
     }
     
@@ -148,8 +189,6 @@ class BreweriesViewController: UIViewController, CLLocationManagerDelegate, MKMa
         }
     }
     
-    
-
 }
 
 extension BreweriesViewController {
@@ -171,12 +210,57 @@ extension BreweriesViewController {
             view.image = UIImage(named: "pinpoint")
             view.calloutOffset = CGPoint(x: -5, y: -5)
             view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-            
         }
         
         
         return view
     }
     
+    
+    
 }
+
+extension BreweriesViewController: HandleMapSearch {
+    func dropPinZoomIn(placemark:MKPlacemark){
+        // cache the pin
+        selectedPin = placemark
+        // clear existing pins
+        mapView.removeAnnotations(mapView.annotations)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = placemark.coordinate
+        annotation.title = placemark.name
+        if let city = placemark.locality,
+            let state = placemark.administrativeArea {
+            annotation.subtitle = "\(city) \(state)"
+        }
+        mapView.addAnnotation(annotation)
+        let span = MKCoordinateSpanMake(0.05, 0.05)
+        let region = MKCoordinateRegionMake(placemark.coordinate, span)
+        mapView.setRegion(region, animated: true)
+        
+        getCurrentCity(latitude: (selectedPin?.coordinate.latitude)!, longitude: (selectedPin?.coordinate.longitude)!)
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -9,7 +9,6 @@
 import UIKit
 
 class StylesViewController: UICollectionViewController, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
-
     
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     fileprivate let itemsPerRow: CGFloat = 1
@@ -208,6 +207,7 @@ class StylesViewController: UICollectionViewController, UISearchBarDelegate, UIS
                 if let selectedRow = collectionView?.indexPathsForSelectedItems![0].row {
                     dest.name = filteredArray[selectedRow].name
                     dest.styleDescription = filteredArray[selectedRow].description!
+                    dest.styleId = filteredArray[selectedRow].id
                     
                     if let srmMax = filteredArray[selectedRow].srmMax, let srmMin = filteredArray[selectedRow].srmMin {
                         dest.srmMin = srmMin
@@ -221,6 +221,7 @@ class StylesViewController: UICollectionViewController, UISearchBarDelegate, UIS
                 if let selectedRow = collectionView?.indexPathsForSelectedItems![0].row {
                     dest.name = styleArray[selectedRow].name
                     dest.styleDescription = styleArray[selectedRow].description!
+                    dest.styleId = styleArray[selectedRow].id
                     
                     if let srmMax = styleArray[selectedRow].srmMax, let srmMin = styleArray[selectedRow].srmMin {
                         dest.srmMin = srmMin

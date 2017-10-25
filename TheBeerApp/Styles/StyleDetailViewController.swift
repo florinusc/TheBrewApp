@@ -14,6 +14,7 @@ class StyleDetailViewController: UIViewController {
     @IBOutlet weak var descriptionView: UITextView!
     
     var styleDescription = ""
+    var styleId: Int?
     var name = ""
     var srmMin = ""
     var srmMax = ""
@@ -53,6 +54,17 @@ class StyleDetailViewController: UIViewController {
             } else {
                 self.view.backgroundColor = UIColor(hex: beerColors[5] )
                 print("srm min is: \(srmMinInt), srm max is: \(srmMaxInt)")
+            }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToBeerList" {
+            if let dest = segue.destination as? BeerList {
+                if styleId != nil {
+                    dest.styleId = styleId!
+                    dest.styleName = name
+                }
             }
         }
     }
