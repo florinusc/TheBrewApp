@@ -43,7 +43,15 @@ struct BreweryResponse: Decodable {
     var currentPage: Int?
     var numberOfPages: Int?
     var totalResults: Int?
-    var data: [BreweryData]
+    var data: [BreweryData]?
+    var status: String?
+}
+
+struct BrewerySearchResponse: Decodable {
+    var currentPage: Int?
+    var numberOfPages: Int?
+    var totalResults: Int?
+    var data: [Brewery]?
     var status: String?
 }
 
@@ -51,19 +59,19 @@ struct BreweryData: Decodable {
     var id: String
     var name: String
     var streetAddress: String?
-    var locality: String
-    var latitude: Double
-    var longitude: Double
-    var isPrimary: String
-    var inPlanning: String
-    var isClosed: String
-    var openToPublic: String
-    var locationType: String
-    var locationTypeDisplay: String
+    var locality: String?
+    var latitude: Double?
+    var longitude: Double?
+    var isPrimary: String?
+    var inPlanning: String?
+    var isClosed: String?
+    var openToPublic: String?
+    var locationType: String?
+    var locationTypeDisplay: String?
     var countryCode: String?
-    var status: String
-    var statusDisplay: String
-    var breweryId: String
+    var status: String?
+    var statusDisplay: String?
+    var breweryId: String?
     var brewery: Brewery
 }
 
@@ -131,7 +139,7 @@ struct BeerData: Decodable {
     var name: String
     var nameDisplay: String
     var statusDisplay: String
-    var styleId: Int
+    var styleId: Int?
     var style: Style?
 }
 

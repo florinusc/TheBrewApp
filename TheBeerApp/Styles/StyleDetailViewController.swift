@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import DeckTransition
 
 class StyleDetailViewController: UIViewController {
-
+    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descriptionView: UITextView!
     
@@ -68,5 +69,24 @@ class StyleDetailViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func addToJournal(_ sender: UIButton) {
+        
+        //Set the delegate for the new Style VC entry
+        let newStyleVC = storyboard?.instantiateViewController(withIdentifier: "NewStyleEntry") as! NewStyleEntry
+        
+        newStyleVC.style = name
+        
+        //Setting the transition style to deck
+        let transitionDelegate = DeckTransitioningDelegate()
+        newStyleVC.transitioningDelegate = transitionDelegate
+        newStyleVC.modalPresentationStyle = .custom
+        
+        //Presenting the new entry VC
+        present(newStyleVC, animated: true, completion: nil)
+        
+    }
+    
+    
     
 }

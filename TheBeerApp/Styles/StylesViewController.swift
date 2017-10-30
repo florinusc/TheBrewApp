@@ -10,6 +10,8 @@ import UIKit
 
 class StylesViewController: UICollectionViewController, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
     
+    @IBOutlet var loadingView: UIView!
+    
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     fileprivate let itemsPerRow: CGFloat = 1
     
@@ -20,28 +22,65 @@ class StylesViewController: UICollectionViewController, UISearchBarDelegate, UIS
     
     let searchController = UISearchController(searchResultsController: nil)
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        //set the status bar color
+        UIApplication.shared.statusBarView?.backgroundColor = UIColor(hex: mainColor)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //setting the big title
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.title = "Styles"
+        UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor(hex: textColor)]
+        
+        //customizing the nav bar
+        navigationController?.navigationBar.barTintColor = UIColor(hex: mainColor)
+        navigationController?.navigationBar.isTranslucent = false
+        
+        //add the loading view before the data gets to populate the collectionView
+        loadingView.frame = self.view.frame
+        self.view.addSubview(loadingView)
+        
         createSearchBar()
         requestData()
     }
     
     func createSearchBar() {
-
+        
+        //Search controller
         self.searchController.searchResultsUpdater = self
         self.searchController.delegate = self
-        self.searchController.searchBar.delegate = self
-        
         self.searchController.hidesNavigationBarDuringPresentation = false
         self.searchController.obscuresBackgroundDuringPresentation = false
         self.searchController.dimsBackgroundDuringPresentation = false
-        self.searchController.searchBar.placeholder = "Search for styles here"
         
+        
+        //Search bar
+        self.searchController.searchBar.delegate = self
+        let bgImage = UIImage(named: "white")
+        self.searchController.searchBar.setSearchFieldBackgroundImage(bgImage, for: .normal)
+        self.searchController.searchBar.tintColor = UIColor(hex: mainColor)
+        
+        let textField = self.searchController.searchBar.value(forKey: "searchField") as? UITextField
+        textField?.textColor = .white
+        textField?.attributedPlaceholder = NSAttributedString(string: "  Search for styles...", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+        
+        
+        //setting the color and size of the text of the cancel button for the search bar
+        let attributes = [
+            NSAttributedStringKey.foregroundColor : UIColor(hex: textColor),
+            NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16)
+        ]
+
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes(attributes, for: .normal)
+
         self.searchController.searchBar.becomeFirstResponder()
-        
-        navigationController?.navigationItem.titleView = self.searchController.searchBar
-        
-        self.navigationItem.titleView = self.searchController.searchBar
+
+        self.navigationItem.searchController = searchController
         
     }
     
@@ -122,7 +161,7 @@ class StylesViewController: UICollectionViewController, UISearchBarDelegate, UIS
                     })
                     
                     DispatchQueue.main.async {
-
+                        self.loadingView.removeFromSuperview()
                         self.collectionView?.reloadData()
                     }
                     

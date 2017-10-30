@@ -26,7 +26,6 @@ class BreweryViewController: UITableViewController {
     
     var brewery: BreweryData?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -87,7 +86,11 @@ class BreweryViewController: UITableViewController {
         locationTypeLabel.text = brewery?.locationTypeDisplay
         descriptionTextView.text = brewery?.brewery.description
         websiteBttn.setTitle(brewery?.brewery.website, for: .normal)
-        addressLabel.text = brewery?.streetAddress
+        if brewery?.streetAddress != nil {
+            addressLabel.text = brewery?.streetAddress
+        } else {
+            addressLabel.text = "not available"
+        }
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -130,13 +133,8 @@ class BreweryViewController: UITableViewController {
     
         if brewery?.brewery.website != nil {
             if let breweryURL = URL(string: (brewery?.brewery.website)!) {
-                UIApplication.shared.openURL(breweryURL)
+                UIApplication.shared.open(breweryURL, options: [:], completionHandler: nil)
             }
         }
     }
-    
-    
-    
-    
-
 }

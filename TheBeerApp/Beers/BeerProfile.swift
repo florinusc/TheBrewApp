@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DeckTransition
 
 class BeerProfile: UITableViewController {
 
@@ -87,5 +88,21 @@ class BeerProfile: UITableViewController {
         styleNameLabel.text = "Style: " + (beerData?.style?.name)!
         styleDescription.text = beerData?.style?.description
     }
-
+    
+    
+    @IBAction func addToJournal(_ sender: UIButton) {
+        //Set the delegate for the new Style VC entry
+        let newBrandVC = storyboard?.instantiateViewController(withIdentifier: "NewBrandEntry") as! NewBrandEntry
+        
+        newBrandVC.brandName = beerData?.name
+        
+        //Setting the transition style to deck
+        let transitionDelegate = DeckTransitioningDelegate()
+        newBrandVC.transitioningDelegate = transitionDelegate
+        newBrandVC.modalPresentationStyle = .custom
+        
+        //Presenting the new entry VC
+        present(newBrandVC, animated: true, completion: nil)
+    }
+    
 }

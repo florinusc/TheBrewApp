@@ -10,7 +10,6 @@ import UIKit
 import MapKit
 
 
-
 protocol HandleMapSearch {
     func dropPinZoomIn(placemark: MKPlacemark)
 }
@@ -43,6 +42,11 @@ class BreweriesViewController: UIViewController, CLLocationManagerDelegate, MKMa
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        UIApplication.shared.statusBarView?.backgroundColor = UIColor(hex: mainColor)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +62,9 @@ class BreweriesViewController: UIViewController, CLLocationManagerDelegate, MKMa
         let searchBar = resultSearchController?.searchBar
         searchBar?.sizeToFit()
         searchBar?.placeholder = "Search for breweries in other places"
+        searchBar?.backgroundColor = UIColor(hex: mainColor)
+        searchBar?.tintColor = UIColor(hex: mainColor)
+        
         navigationItem.titleView = searchBar
         resultSearchController?.hidesNavigationBarDuringPresentation = false
         resultSearchController?.dimsBackgroundDuringPresentation = true
@@ -128,12 +135,16 @@ class BreweriesViewController: UIViewController, CLLocationManagerDelegate, MKMa
             
             if error == nil {
                 do {
-                    self.breweryArr = try JSONDecoder().decode(BreweryResponse.self, from: data!).data
                     
-                    self.addBreweryPoints(breweryArray: self.breweryArr)
-                    
+                    if let tempArr = try JSONDecoder().decode(BreweryResponse.self, from: data!).data {
+                        self.breweryArr = tempArr
+                        
+                        self.addBreweryPoints(breweryArray: self.breweryArr)
+                    }
+
                 } catch let err {
                     print("json decoding error: \(err)")
+                    
                 }
             } else {
                 print(error?.localizedDescription ?? "")
@@ -156,7 +167,7 @@ class BreweriesViewController: UIViewController, CLLocationManagerDelegate, MKMa
                 address = ""
             }
             
-            let breweryPoint = BreweryPoint(title: brewery.name, address: address, coordinate: CLLocationCoordinate2D(latitude: brewery.latitude, longitude: brewery.longitude), id: brewery.id, brewery: brewery)
+            let breweryPoint = BreweryPoint(title: brewery.name, address: address, coordinate: CLLocationCoordinate2D(latitude: brewery.latitude!, longitude: brewery.longitude!), id: brewery.id, brewery: brewery)
             
             annotationArr.append(breweryPoint)
         }
