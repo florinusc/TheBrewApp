@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Nwp-ou-zUt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vzG-OA-nww">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -616,10 +616,43 @@
             </objects>
             <point key="canvasLocation" x="1908" y="125.4872563718141"/>
         </scene>
+        <!--Launch View Controller-->
+        <scene sceneID="O6R-Ja-aCd">
+            <objects>
+                <viewController id="vzG-OA-nww" customClass="LaunchViewController" customModule="TheBeerApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="B4X-m4-hdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="largeBeerIcon" translatesAutoresizingMaskIntoConstraints="NO" id="8LB-3B-wst">
+                                <rect key="frame" x="137" y="283" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vY3-EK-wBy">
+                                <rect key="frame" x="0.0" y="588" width="375" height="80"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <string key="text">2017 
+Florin Uscatu</string>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.94509803920000002" green="0.76862745099999996" blue="0.058823529409999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="uHd-IS-k4V"/>
+                    </view>
+                    <connections>
+                        <segue destination="Nwp-ou-zUt" kind="custom" identifier="introSegue" customClass="IntroSegue" customModule="TheBeerApp" customModuleProvider="target" id="wWH-SJ-jxc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eTi-JP-HLm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2444" y="123.68815592203899"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="UEE-cg-fb0">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Nwp-ou-zUt" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabController" automaticallyAdjustsScrollViewInsets="NO" id="Nwp-ou-zUt" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="o9Z-A0-ruF"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Chg-th-EoA">
@@ -1301,6 +1334,7 @@ http://www.brewerydb.com/</string>
         <image name="delete" width="32" height="32"/>
         <image name="globe" width="170" height="170"/>
         <image name="journal" width="25" height="25"/>
+        <image name="largeBeerIcon" width="341" height="341"/>
         <image name="location" width="170" height="170"/>
     </resources>
 </document>

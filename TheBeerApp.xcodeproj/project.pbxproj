@@ -32,6 +32,8 @@
 		9FC596AE1F9CE7130001BAA5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FC596AC1F9CE7130001BAA5 /* LaunchScreen.storyboard */; };
 		9FC596B61F9D08E00001BAA5 /* StyleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC596B51F9D08E00001BAA5 /* StyleCell.swift */; };
 		9FC596B81F9D0D020001BAA5 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC596B71F9D0D020001BAA5 /* Utilities.swift */; };
+		9FFC16481FA713A300E1B8DF /* IntroSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC16471FA713A300E1B8DF /* IntroSegue.swift */; };
+		9FFC164A1FA7141E00E1B8DF /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC16491FA7141E00E1B8DF /* LaunchViewController.swift */; };
 		ACC525ED32DC9E801E32DC59 /* Pods_TheBeerApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270142FFB75EAAC8FFE197A9 /* Pods_TheBeerApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +67,8 @@
 		9FC596AF1F9CE7130001BAA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9FC596B51F9D08E00001BAA5 /* StyleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleCell.swift; sourceTree = "<group>"; };
 		9FC596B71F9D0D020001BAA5 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		9FFC16471FA713A300E1B8DF /* IntroSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroSegue.swift; sourceTree = "<group>"; };
+		9FFC16491FA7141E00E1B8DF /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		A5E3332FE8497CFADF638505 /* Pods-TheBeerApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBeerApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheBeerApp/Pods-TheBeerApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -203,6 +207,8 @@
 			isa = PBXGroup;
 			children = (
 				9FC596A71F9CE7130001BAA5 /* Main.storyboard */,
+				9FFC16471FA713A300E1B8DF /* IntroSegue.swift */,
+				9FFC16491FA7141E00E1B8DF /* LaunchViewController.swift */,
 				9FC596A31F9CE7130001BAA5 /* AppDelegate.swift */,
 				9F17529D1FA3059B00F3CC1E /* SearchViewController.swift */,
 				9F17529F1FA3250300F3CC1E /* BeerSearchTable.swift */,
@@ -366,6 +372,7 @@
 				9F151A151FA1060C000B27B9 /* JournalCell.swift in Sources */,
 				9FC596A41F9CE7130001BAA5 /* AppDelegate.swift in Sources */,
 				9F1C70441FA087AB006DFEC7 /* MyStylesViewController.swift in Sources */,
+				9FFC164A1FA7141E00E1B8DF /* LaunchViewController.swift in Sources */,
 				9F1752981FA230FE00F3CC1E /* NewPairingEntry.swift in Sources */,
 				9F3BCB611F9F925400125D76 /* LocationSearchTable.swift in Sources */,
 				9F1C70421FA08562006DFEC7 /* PageMenuController.swift in Sources */,
@@ -376,6 +383,7 @@
 				9F1C70461FA087B9006DFEC7 /* MyBrandsViewController.swift in Sources */,
 				9F1C70391F9FB32A006DFEC7 /* BeerList.swift in Sources */,
 				9F17529E1FA3059B00F3CC1E /* SearchViewController.swift in Sources */,
+				9FFC16481FA713A300E1B8DF /* IntroSegue.swift in Sources */,
 				9F2D670D1F9E1DB00049A097 /* BreweriesViewController.swift in Sources */,
 				9F1752931FA1C45300F3CC1E /* NewBrandEntry.swift in Sources */,
 				9F292F521F9F0FB400AAFC8C /* Models.swift in Sources */,
