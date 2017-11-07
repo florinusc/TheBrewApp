@@ -149,3 +149,20 @@ struct BeerLabel: Decodable {
     var medium: String
 }
 
+struct BarcodeResponse: Decodable {
+    var code: String
+    var status: Int
+    var status_verbose: String
+    var product: BarcodeProduct?
+}
+
+struct BarcodeProduct: Decodable {
+    var _keywords: [String]
+    var product_name: String?
+}
+
+enum SearchType {
+    case beer
+    case brewery
+}
+

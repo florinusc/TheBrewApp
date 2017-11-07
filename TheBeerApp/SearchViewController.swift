@@ -11,23 +11,6 @@ import BarcodeScanner
 import JSSAlertView
 import DeckTransition
 
-struct BarcodeResponse: Decodable {
-    var code: String
-    var status: Int
-    var status_verbose: String
-    var product: BarcodeProduct?
-}
-
-struct BarcodeProduct: Decodable {
-    var _keywords: [String]
-    var product_name: String?
-}
-
-enum SearchType {
-    case beer
-    case brewery
-}
-
 class SearchViewController: UIViewController, UITextFieldDelegate {
 
     var beerArr: [BeerData] = []
