@@ -44,38 +44,40 @@ class BeerList: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func requestData(page: Int) {
-        let urlString = "http://api.brewerydb.com/v2/beers?styleId=\(styleId)&p=\(page)&key=1da922b0d817607f683dc6e2cb1612dc"
-        let url = URL(string: urlString)
         
-        let task = URLSession.shared.dataTask(with: url!) {
-            (data, response, error) -> Void in
+        DispatchQueue.global().async {
+            let urlString = "http://api.brewerydb.com/v2/beers?styleId=\(self.styleId)&p=\(page)&key=1da922b0d817607f683dc6e2cb1612dc"
+            let url = URL(string: urlString)
             
-            if error == nil {
-                do {
-                    
-                    let tempArr = try JSONDecoder().decode(BeerResponse.self, from: data!).data
-                    
-                    self.beerArr.append(contentsOf: tempArr)
-                    
-                    let jsonData = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
-                    
-                    self.numberOfPages = jsonData["numberOfPages"] as! Int
-                    self.currentPage = jsonData["currentPage"] as! Int
-                    
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
+            let task = URLSession.shared.dataTask(with: url!) {
+                (data, response, error) -> Void in
+                
+                if error == nil {
+                    do {
+                        
+                        let tempArr = try JSONDecoder().decode(BeerResponse.self, from: data!).data
+                        
+                        self.beerArr.append(contentsOf: tempArr)
+                        
+                        let jsonData = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
+                        
+                        self.numberOfPages = jsonData["numberOfPages"] as! Int
+                        self.currentPage = jsonData["currentPage"] as! Int
+                        
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                        
+                    } catch let err {
+                        print(err)
                     }
-                    
-                } catch let err {
-                    print(err)
+                } else {
+                    print(error?.localizedDescription ?? "")
                 }
-            } else {
-                print(error?.localizedDescription ?? "")
             }
+            
+            task.resume()
         }
-        
-        task.resume()
-        
     }
     
     
