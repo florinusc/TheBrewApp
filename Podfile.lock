@@ -1,0 +1,27 @@
+PODS:
+  - BarcodeScanner (3.0.0)
+  - DeckTransition (1.3.2)
+  - DeviceKit (1.4.0)
+  - Eureka (4.0.0)
+  - JSSAlertView (3.0.4)
+  - Parchment (0.6.0)
+
+DEPENDENCIES:
+  - BarcodeScanner
+  - DeckTransition (~> 1.0)
+  - DeviceKit (~> 1.0)
+  - Eureka
+  - JSSAlertView
+  - Parchment
+
+SPEC CHECKSUMS:
+  BarcodeScanner: 4ba61e8b2d50da7b17685085d4bb8e1a0c14613e
+  DeckTransition: efd76e08102112960fc7938411638d7c012248b3
+  DeviceKit: fa74d97499660e88081718b16688e19217595dba
+  Eureka: c0b55d2aec82050c1400c7d65960b700be8d10ef
+  JSSAlertView: 7d8345c88e6fd8b515bc49f0fc8d8c69f6776b9c
+  Parchment: 18c95468970cb4010677e9b74456f4a52f035307
+
+PODFILE CHECKSUM: 3ce6a61e9a3884febb2ef0b171f5ca7ee6ef8a52
+
+COCOAPODS: 1.3.1
